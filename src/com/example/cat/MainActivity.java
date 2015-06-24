@@ -14,8 +14,8 @@ public class MainActivity extends PApplet {
 	int ancho = 0, alto = 0;
 	int puntos = 0, mejorPuntuacion = 0;
 	int touchX = 0, touchY = 0;
-	int numX = 3, numY = 3;
-	int mapa[][] = new int[numX][numY];
+	int numEspaciosX = 3, numEspaciosY = 3;
+	int mapa[][] = new int[numEspaciosX][numEspaciosY];
 
 	ArrayList<Bola> bolas = new ArrayList<Bola>();
 
@@ -30,9 +30,9 @@ public class MainActivity extends PApplet {
 	public void setup() 
 	{
 		 orientation(PORTRAIT);	
-		 initMap(numX, numY);
+		 initMap(numEspaciosX, numEspaciosY);
 		 mapa[posX][posY] = 1;
-		 ancho = ((width / 3) / 3) / 2;
+		 ancho = ((width / numEspaciosX) / numEspaciosX) / 2;
 		 alto  = ancho;
 		 generarComida();
 		 thread1 = new ControlTiempo(5);
@@ -94,7 +94,7 @@ public boolean dispatchTouchEvent(MotionEvent event)
 				}
 				else
 				{
-					if(posY<numY-1)
+					if(posY<numEspaciosY-1)
 				      {
 				        mapa[posX][posY] = 0;
 				        posY++;
@@ -115,7 +115,7 @@ public boolean dispatchTouchEvent(MotionEvent event)
 				}
 				else
 				{
-					 if(posX<numX-1)
+					 if(posX<numEspaciosX-1)
 				      {
 				        mapa[posX][posY] = 0;
 				        posX++;
@@ -133,10 +133,10 @@ public boolean dispatchTouchEvent(MotionEvent event)
 /////////////////////////////////////
 /////////////////////////////Android
 
-	void initMap(int numX, int numY)
+	void initMap(int numEspaciosX, int numEspaciosY)
 	{
-	  for(int i=0; i<numX; i++)
-	    for(int j=0; j<numY; j++)
+	  for(int i=0; i<numEspaciosX; i++)
+	    for(int j=0; j<numEspaciosY; j++)
 	      mapa[i][j] = 0;  
 	}
 	
@@ -149,8 +149,8 @@ public boolean dispatchTouchEvent(MotionEvent event)
 		int xPersonaje = 0;
 		int yPersonaje = 0;
 		
-		for(int i=0;i<numY;i++)
-			for(int j=0;j<numX;j++)
+		for(int i=0;i<numEspaciosY;i++)
+			for(int j=0;j<numEspaciosX;j++)
 				for(int k=0; k<bolas.size(); k++)
 				{	
 					xBola = bolas.get(k).getPosX();
@@ -177,8 +177,8 @@ public boolean dispatchTouchEvent(MotionEvent event)
 	
 	void generarComida()
 	{
-	  posXcomida = (int)random(0,3);
-	  posYcomida = (int)random(0,3);
+	  posXcomida = (int)random(0,numEspaciosX);
+	  posYcomida = (int)random(0,numEspaciosY);
 	  
 	  if(posXcomida==posX&&posYcomida==posY)
 	    generarComida();    
